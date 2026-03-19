@@ -19,9 +19,9 @@ Below is a list of my active pull requests targeting core infrastructure, bug fi
 
 #### ✅ Merged & Resolved (Closed by Maintainers)
 
-* **SciMLBase.jl [#1265]:** Implemented architectural validation for `EnsembleProblem` dispatch. Prevented a critical silent fallback to CPU in GPU simulations by explicitly catching invalid `ensemblealg` keyword arguments, directly improving error handling and developer experience.
-* **SciMLBase.jl [#1258]:** Fix hardcoded type in `AutoSpecialize` to prevent `MethodError` when passing analytic functions.
-* **MethodOfLines.jl [Issue #445]:** Resolved mass leakage in age-structured SIR PDEs. Diagnosed boundary PDE-ODE coupling failures and formulated a DAE-based hard constraint solution, officially acknowledged and closed by Chris Rackauckas.
+* **SciMLBase.jl [[#1265]](https://github.com/SciML/SciMLBase.jl/pull/1265):** Implemented architectural validation for `EnsembleProblem` dispatch. Prevented a critical silent fallback to CPU in GPU simulations by explicitly catching invalid `ensemblealg` keyword arguments, directly improving error handling and developer experience.
+* **SciMLBase.jl [[#1258]](https://github.com/SciML/SciMLBase.jl/pull/1258):** Fix hardcoded type in `AutoSpecialize` to prevent `MethodError` when passing analytic functions.
+* **MethodOfLines.jl [[Issue #445]](https://github.com/SciML/MethodOfLines.jl/issues/445):** Resolved mass leakage in age-structured SIR PDEs. Diagnosed boundary PDE-ODE coupling failures and formulated a DAE-based hard constraint solution, officially acknowledged and closed by Chris Rackauckas.
 
 ### 🚧 Proof of Concept (Draft)
 * **MethodOfLines.jl [[#535]](https://github.com/SciML/MethodOfLines.jl/pull/535):** Proof of Concept: Non-Uniform Grid Ingestion *(Direct foundation for this project)*
