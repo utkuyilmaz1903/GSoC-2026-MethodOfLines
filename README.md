@@ -9,30 +9,38 @@ Welcome to the central repository for my Google Summer of Code 2026 application.
 * [**GSoC 2026 Project Proposal**](./SciMLUtkuYilmazProposal.pdf) (PDF)
 * [**Curriculum Vitae**](./Utku_Yilmaz_CV.pdf) (PDF)
 
-## 🔬 Personal R&D & Prototypes
-Before modifying the core SciML codebase, I extensively researched and prototyped the necessary mathematics (Fornberg algorithm, WENO smoothness indicators for variable spacing) and identified the exact architectural bottlenecks. 
-* 📂 **[learning-sciML-pde](https://github.com/utkuyilmaz1903/learning-sciML-pde):** My dedicated research repository containing custom non-uniform FDM/FVM implementations, performance benchmarks, and proof-of-concepts.
+## 🎯 Project Abstract
+The goal of this project is to deliver comprehensive, end-to-end non-uniform grid support for `MethodOfLines.jl`. This includes refactoring basic schemes to handle variable step sizes, mathematically deriving and implementing native non-uniform stencils for advanced high-order schemes (like WENO), and establishing the core data structures necessary for future Finite Volume Method (FVM) integration.
 
-### 🛠️ Active & Merged Contributions to SciML
+## 🔬 Personal R&D & Feasibility Prototypes
+To mitigate technical risks and prove architectural feasibility, I maintain a dedicated research repository and have developed several standalone prototypes:
+* 📂 **[learning-sciML-pde](https://github.com/utkuyilmaz1903/learning-sciML-pde):** Contains custom 1D/2D FDM/FVM implementations, Fornberg benchmarks, and mathematical analysis of WENO smoothness indicators on clustered grids.
 
-Below is a list of my active pull requests targeting core infrastructure, bug fixes, and non-uniform grid support:
+**Strategic Prototypes:**
+* **Architectural POC ([Draft PR #535](https://github.com/SciML/MethodOfLines.jl/pull/535)):** Decoupled the differential discretizer to accept `AbstractVector` grid types.
+* **WENO Engine Prototype ([Draft PR #538](https://github.com/SciML/MethodOfLines.jl/pull/538)):** Standalone 1D mathematical engine for non-uniform WENO weights featuring dynamic smoothness indicators.
+* **Boundary Engine Prototype ([Draft PR #539](https://github.com/SciML/MethodOfLines.jl/pull/539)):** Zero-allocation, O(1) mathematical engine for 4-point one-sided finite difference weights integrating Kahan summation.
+* **Dispatch Infrastructure Prototype ([Draft PR #542](https://github.com/SciML/MethodOfLines.jl/pull/542)):** Dispatch hub leveraging Julia’s Trait system to route between computational engines with zero runtime overhead.
 
-#### ✅ Merged & Resolved (Closed by Maintainers)
+## 🛠️ Contributions to the SciML Ecosystem
 
-* **SciMLBase.jl [[#1265]](https://github.com/SciML/SciMLBase.jl/pull/1265)(Resolves [Issue #1130](https://github.com/SciML/DifferentialEquations.jl/issues/1130)):** Implemented architectural validation for `EnsembleProblem` dispatch. Prevented a critical silent fallback to CPU in GPU simulations by explicitly catching invalid `ensemblealg` keyword arguments, directly improving error handling and developer experience.
-* **SciMLBase.jl [[#1258]](https://github.com/SciML/SciMLBase.jl/pull/1258):** Fix hardcoded type in `AutoSpecialize` to prevent `MethodError` when passing analytic functions.
-* **MethodOfLines.jl [[Issue #445]](https://github.com/SciML/MethodOfLines.jl/issues/445):** Resolved mass leakage in age-structured SIR PDEs. Diagnosed boundary PDE-ODE coupling failures and formulated a DAE-based hard constraint solution, officially acknowledged and closed by Chris Rackauckas.
+Below is a categorized overview of my core infrastructure fixes, bug resolutions, and non-uniform grid developments:
 
-### 🚧 Proof of Concept (Draft)
-* **MethodOfLines.jl [[#535]](https://github.com/SciML/MethodOfLines.jl/pull/535):** Proof of Concept: Non-Uniform Grid Ingestion *(Direct foundation for this project)*
+### ✅ Merged Core Architectural & Dispatch Fixes
+* **SciMLBase.jl [[PR #1265]](https://github.com/SciML/SciMLBase.jl/pull/1265) / Resolves [Issue #1130](https://github.com/SciML/DifferentialEquations.jl/issues/1130):** Prevented silent CPU fallbacks in GPU simulations by fixing a dispatch trap in `EnsembleProblem`.
+* **SciMLBase.jl [[PR #1258]](https://github.com/SciML/SciMLBase.jl/pull/1258):** Fixed a `MethodError` by dynamically typing analytic functions in `AutoSpecialize`.
+* **MethodOfLines.jl [[Issue #445]](https://github.com/SciML/MethodOfLines.jl/issues/445):** Solved a critical mass leakage problem in age-of-infection SIR models by reformulating the system algebraically as a DAE.
 
-### 🔄 Open PRs & Discussions
-* **MethodOfLines.jl [[#533]](https://github.com/SciML/MethodOfLines.jl/pull/533):** Fix `BoundsError` in `UpwindScheme`
-* **MethodOfLines.jl [[#532]](https://github.com/SciML/MethodOfLines.jl/pull/532):** Fix infinite loop in `transform_pde_system!`
-* **MethodOfLines.jl [[#534]](https://github.com/SciML/MethodOfLines.jl/pull/534):** Add non-uniform grid tutorials to docs
+### 🔄 Open/Active: Grid & Discretization Refactoring (MethodOfLines.jl)
+* **[[PR #543]](https://github.com/SciML/MethodOfLines.jl/pull/543) & [[PR #541]](https://github.com/SciML/MethodOfLines.jl/pull/541):** Introduced a recursive well-posedness check in the discretization flow to gracefully catch missing boundary conditions, preventing complex `RuleRewriteError`s on non-uniform domains.
+* **[[PR #533]](https://github.com/SciML/MethodOfLines.jl/pull/533):** Fixed a critical `BoundsError` in `UpwindScheme` by correcting hardcoded boundary coefficients logic for variable step sizes.
+* **[[PR #532]](https://github.com/SciML/MethodOfLines.jl/pull/532):** Prevented infinite loops in `transform_pde_system!` by resolving boolean context errors.
+* **[[PR #534]](https://github.com/SciML/MethodOfLines.jl/pull/534):** Added a foundational mathematical tutorial for non-uniform grid discretization to the official documentation.
+
+### ⚙️ Open/Active: Core Symbolic Engine (SymbolicUtils.jl)
+* **[[PR #884]](https://github.com/JuliaSymbolics/SymbolicUtils.jl/pull/884) (Fixes [Issue #876](https://github.com/JuliaSymbolics/SymbolicUtils.jl/issues/876)):** Fixed a scoping leak in nested `ArrayOp` substitution during scalarization. Implemented a zero-allocation, scope-aware substitution filter to unblock the evaluation of non-linear diffusion and advanced stencils (like WENO) on non-uniform domains.
 
 ## 📬 Contact Information
 * **Email:** utkyilmz@gmail.com
 * **GitHub:** [@utkuyilmaz1903](https://github.com/utkuyilmaz1903)
-* **SciML Slack:** Utku Yılmaz *(Active for GSoC and technical discussions)* (https://julialang.slack.com/team/U0AGVEXKJ07)
-* **Julia Discourse:** [Utku_Yilmaz](https://discourse.julialang.org/u/utku_yilmaz/summary)
+* **SciML Slack:** Utku Yılmaz *(Active for GSoC and technical discussions)* * **Julia Discourse:** [Utku_Yilmaz](https://discourse.julialang.org/u/utku_yilmaz/summary)
