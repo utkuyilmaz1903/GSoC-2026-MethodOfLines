@@ -43,4 +43,5 @@ Below is a categorized overview of my core infrastructure fixes, bug resolutions
 ## 📬 Contact Information
 * **Email:** utkyilmz@gmail.com
 * **GitHub:** [@utkuyilmaz1903](https://github.com/utkuyilmaz1903)
-* **SciML Slack:** Utku Yılmaz *(Active for GSoC and technical discussions)* * **Julia Discourse:** [Utku_Yilmaz](https://discourse.julialang.org/u/utku_yilmaz/summary)
+* **SciML Slack:** Utku Yılmaz *(Active for GSoC and technical discussions)* 
+* **Julia Discourse:** [Utku_Yilmaz](https://discourse.julialang.org/u/utku_yilmaz/summary)
