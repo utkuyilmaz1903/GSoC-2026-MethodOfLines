@@ -33,7 +33,7 @@ Below is a categorized overview of my core infrastructure fixes, bug resolutions
 
 ### 🔄 Open/Active: Grid & Discretization Refactoring (MethodOfLines.jl)
 * **[[PR #543]](https://github.com/SciML/MethodOfLines.jl/pull/543) & [[PR #541]](https://github.com/SciML/MethodOfLines.jl/pull/541):** Introduced a recursive well-posedness check in the discretization flow to gracefully catch missing boundary conditions, preventing complex `RuleRewriteError`s on non-uniform domains.
-* **[[PR #70]](https://github.com/SciML/MethodOfLines.jl/pull/70) (Fixes [Issue #67](https://github.com/SciML/MethodOfLines.jl/issues/67)):** Addressed boundary resolution failures by implementing fallback `offset` dispatch methods for `LowerBoundary` and `UpperBoundary` types. Included rigorous safetestsets to prevent future regressions.
+* **[[PR #70]](https://github.com/SciML/PDEBase.jl/pull/70) (Fixes [Issue #67](https://github.com/SciML/PDEBase.jl/issues/67)):** Addressed boundary resolution failures by implementing fallback `offset` dispatch methods for `LowerBoundary` and `UpperBoundary` types. Included rigorous safetestsets to prevent future regressions.
 * **[[PR #533]](https://github.com/SciML/MethodOfLines.jl/pull/533):** Fixed a critical `BoundsError` in `UpwindScheme` by correcting hardcoded boundary coefficients logic for variable step sizes.
 * **[[PR #532]](https://github.com/SciML/MethodOfLines.jl/pull/532):** Prevented infinite loops in `transform_pde_system!` by resolving boolean context errors.
 * **[[PR #534]](https://github.com/SciML/MethodOfLines.jl/pull/534):** Added a foundational mathematical tutorial for non-uniform grid discretization to the official documentation.
