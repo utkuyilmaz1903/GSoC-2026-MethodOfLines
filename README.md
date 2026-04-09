@@ -33,11 +33,12 @@ Below is a categorized overview of my core infrastructure fixes, bug resolutions
 
 ### 🔄 Open/Active: Grid & Discretization Refactoring (MethodOfLines.jl)
 * **[[PR #543]](https://github.com/SciML/MethodOfLines.jl/pull/543) & [[PR #541]](https://github.com/SciML/MethodOfLines.jl/pull/541):** Introduced a recursive well-posedness check in the discretization flow to gracefully catch missing boundary conditions, preventing complex `RuleRewriteError`s on non-uniform domains.
+* **[[PR #70]](https://github.com/SciML/MethodOfLines.jl/pull/70) (Fixes [Issue #67](https://github.com/SciML/MethodOfLines.jl/issues/67)):** Addressed boundary resolution failures by implementing fallback `offset` dispatch methods for `LowerBoundary` and `UpperBoundary` types. Included rigorous safetestsets to prevent future regressions.
 * **[[PR #533]](https://github.com/SciML/MethodOfLines.jl/pull/533):** Fixed a critical `BoundsError` in `UpwindScheme` by correcting hardcoded boundary coefficients logic for variable step sizes.
 * **[[PR #532]](https://github.com/SciML/MethodOfLines.jl/pull/532):** Prevented infinite loops in `transform_pde_system!` by resolving boolean context errors.
 * **[[PR #534]](https://github.com/SciML/MethodOfLines.jl/pull/534):** Added a foundational mathematical tutorial for non-uniform grid discretization to the official documentation.
 
-### ⚙️ Open/Active: Core Symbolic Engine (SymbolicUtils.jl)
+### ⚙️ Merged: Core Symbolic Engine (SymbolicUtils.jl)
 * **[[PR #884]](https://github.com/JuliaSymbolics/SymbolicUtils.jl/pull/884) (Fixes [Issue #876](https://github.com/JuliaSymbolics/SymbolicUtils.jl/issues/876)):** Fixed a scoping leak in nested `ArrayOp` substitution during scalarization. Implemented a zero-allocation, scope-aware substitution filter to unblock the evaluation of non-linear diffusion and advanced stencils (like WENO) on non-uniform domains.
 
 ## 📬 Contact Information
